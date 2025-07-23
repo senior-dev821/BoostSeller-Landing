@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect, useState } from 'react';
-import Spinner from '@/components/Common/Spinner';
 import AboutSectionOne from "@/components/About/AboutSectionOne";
 import AboutSectionTwo from "@/components/About/AboutSectionTwo";
 import ScrollUp from "@/components/Common/ScrollUp";
