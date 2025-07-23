@@ -44,7 +44,7 @@ const SingleTestimonial: React.FC<SingleTestimonialProps> = ({
         ))}
       </div>
 
-      <p className="text-base text-body-color italic">"{message}"</p>
+      <p className="text-base text-body-color italic">{message}</p>
     </div>
   );
 };

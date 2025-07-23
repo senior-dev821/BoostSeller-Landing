@@ -50,22 +50,22 @@ const AboutSectionOne: React.FC<AboutSectionOneProps> = ({
 									mb="44px"
 								/>
                 <div className="mx-[-12px] flex flex-wrap">
-                  {/* Problems */}
-                  <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <h4 className="mb-4 text-xl font-semibold text-primary">{content[0]}</h4>
-                    {listItems1.map((item) => (
-											<List text={item} /> 
-                  	))}
-                  </div>
+									{/* Problems */}
+									<div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
+										<h4 className="mb-4 text-xl font-semibold text-primary">{content[0]}</h4>
+										{listItems1.map((item, index) => (
+											<List key={`problem-${index}`} text={item} /> 
+										))}
+									</div>
 
-                  {/* Solutions */}
-                  <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <h4 className="mb-4 text-xl font-semibold text-primary">{content[1]}</h4>
-                    {listItems2.map((item) => (
-											<List text={item} /> 
-                  	))}
-                  </div>
-                </div>
+									{/* Solutions */}
+									<div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
+										<h4 className="mb-4 text-xl font-semibold text-primary">{content[1]}</h4>
+										{listItems2.map((item, index) => (
+											<List key={`solution-${index}`} text={item} /> 
+										))}
+									</div>
+								</div>
               </div>
             </div>
 
