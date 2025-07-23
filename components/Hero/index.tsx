@@ -1,23 +1,37 @@
-// "use client"
-import React from 'react';
-import Link from "next/link";
-// import Image from "next/image";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Typewriter } from 'react-simple-typewriter';
 
 type HeroButton = {
   id: number;
   text: string;
-  type: 'primary' | 'secondary' | string; // Extend with your custom button types
+  type: 'primary' | 'secondary' | string;
   url: string;
 };
 
-type HeroProps = {
-  titles: string[];
-  subtitle: string;
-  buttons: HeroButton[];
-};
+const Hero: React.FC = () => {
+  const [titles, setTitles] = useState<string[]>([]);
+  const [subtitle, setSubtitle] = useState('');
+  const [buttons, setButtons] = useState<HeroButton[]>([]);
 
-const Hero: React.FC<HeroProps> = ({ titles, subtitle, buttons }) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/hero');
+        const data = await res.json();
+        setTitles(data.titles);
+        setSubtitle(data.subtitle);
+        setButtons(data.buttons);
+      } catch (error) {
+        console.error('Failed to fetch hero content:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+	
   return (
     <>
       <section

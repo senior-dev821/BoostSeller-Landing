@@ -1,7 +1,9 @@
 // components/About/AboutSectionTwo.tsx
-import React from 'react';
-import Image from "next/image";
-import SectionTitle from "../Common/SectionTitle";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import SectionTitle from '../Common/SectionTitle';
 
 type Content = {
   id: number;
@@ -9,19 +11,30 @@ type Content = {
   description: string;
 };
 
+const AboutSectionTwo: React.FC = () => {
+  const [title, setTitle] = useState('');
+  const [subtitle, setSubtitle] = useState('');
+  const [contents, setContents] = useState<Content[]>([]);
+  const [imageUrl, setImageUrl] = useState('/images/about/whyboostseller.png'); // default fallback
 
-type AboutSectionTwoProps = {
-  title: string;
-  subtitle: string;
-  contents: Content[];
-  imageUrl: string;
-};
-const AboutSectionTwo: React.FC<AboutSectionTwoProps> = ({
-  title,
-  subtitle,
-  contents = [],
-  imageUrl,
-}) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/about'); // ✅ change this to your actual API route
+        const data = await res.json();
+
+        setTitle(data.sectionTwo.title);
+        setSubtitle(data.sectionTwo.subtitle);
+        setContents(data.sectionTwo.contents);
+        setImageUrl(data.sectionTwo.imageUrl);
+      } catch (err) {
+        console.error('Failed to fetch AboutSectionTwo data:', err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <section id="why-us" className="py-16 md:py-20 lg:py-28">
       <div className="container">
@@ -33,7 +46,7 @@ const AboutSectionTwo: React.FC<AboutSectionTwoProps> = ({
               data-wow-delay=".15s"
             >
               <Image
-                src="/images/about/whyboostseller.png"
+                src={imageUrl}
                 alt="Why Choose BoostSeller"
                 fill
                 className=""

@@ -1,5 +1,6 @@
 // import Image from "next/image";
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import SectionTitle from "../Common/SectionTitle";
 import PhoneCarousel from "../Common/PhoneCarousel";
 const checkIcon = (
@@ -18,21 +19,32 @@ const List = ({ text }: { text: string }) => (
 );
 
 
-type AboutSectionOneProps = {
-  title: string;
-  subtitle: string;
-  content: string[];
-  listItems1?: string[];
-	listItems2?: string[];
-};
+const AboutSectionOne: React.FC = () => {
+  const [title, setTitle] = useState('');
+  const [subtitle, setSubtitle] = useState('');
+  const [content, setContent] = useState<string[]>([]);
+  const [listItems1, setListItems1] = useState<string[]>([]);
+  const [listItems2, setListItems2] = useState<string[]>([]);
 
-const AboutSectionOne: React.FC<AboutSectionOneProps> = ({
-	title,
-  subtitle,
-  content = [],
-	listItems1 = [],
-	listItems2 = [],
-}) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/about'); // change to your actual endpoint
+        const data = await res.json();
+
+        setTitle(data.sectionOne.title);
+        setSubtitle(data.sectionOne.subtitle);
+        setContent(data.sectionOne.content);        // e.g. ['Problems', 'Solutions']
+        setListItems1(data.sectionOne.listItems1);  // array of strings
+        setListItems2(data.sectionOne.listItems2);  // array of strings
+      } catch (error) {
+        console.error('Failed to load about section:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <section id="problem-solution" className="pt-16 md:pt-20 lg:pt-28">
       <div className="container">

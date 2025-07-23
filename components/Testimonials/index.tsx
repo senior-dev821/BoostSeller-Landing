@@ -1,13 +1,12 @@
-"use client"; // only if you’re using app/ directory
+'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SectionTitle from "../Common/SectionTitle";
 import SingleTestimonial from "./SingleTestimonial";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
-import 'swiper/css/pagination';
-
+import "swiper/css/pagination";
 
 type Testimonial = {
   id: number;
@@ -19,55 +18,63 @@ type Testimonial = {
   order: number;
 };
 
-type TestimonialsProps = {
-  title: string;
-  subtitle: string;
-  items: Testimonial[];
-};
+const Testimonials: React.FC = () => {
+  const [title, setTitle] = useState('');
+  const [subtitle, setSubtitle] = useState('');
+  const [items, setItems] = useState<Testimonial[]>([]);
 
-const Testimonials: React.FC<TestimonialsProps> = ({ title, subtitle, items }) => {
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/testimonials'); // Update with your actual API route
+        const data = await res.json();
+        setTitle(data.title);
+        setSubtitle(data.subtitle);
+        setItems(data.items);
+      } catch (error) {
+        console.error('Failed to fetch testimonials:', error);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
+
   return (
     <section className="dark:bg-bg-color-dark bg-gray-light relative z-10 py-16 md:py-20 lg:py-28">
       <div className="container">
-        <SectionTitle
-          title={title}
-          paragraph={subtitle}
-          center
-        />
-				<div className="mx-auto max-w-[1024px] justify-center">
-					<Swiper
-						modules={[Pagination, Autoplay]}
-						loop={true}
-						autoplay={{
-							delay: 5000,
-							disableOnInteraction: false,
-						}}
-						spaceBetween={24}
-						slidesPerView={3}   
-						pagination={{
-							dynamicBullets: true,
-						}}
-						breakpoints={{
-							0: { slidesPerView: 1 },
-							768: { slidesPerView: 2 },
-							1024: { slidesPerView: 3 },
-						}}
-						// className="!overflow-visible"
-					>
-						{items?.length?(
-							items
-							.sort((a, b) => a.order - b.order)
-							.map((testimonial) => (
-								<SwiperSlide key={testimonial.id}>
-									<SingleTestimonial key={testimonial.id} {...testimonial} />
-								</SwiperSlide>
-							))
-						):(
-							<p>No Testimonials available</p>
-						)
-						}
-					</Swiper>
-				</div>
+        <SectionTitle title={title} paragraph={subtitle} center />
+        <div className="mx-auto max-w-[1024px] justify-center">
+          {items.length > 0 ? (
+            <Swiper
+              modules={[Pagination, Autoplay]}
+              loop={true}
+              autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+              }}
+              spaceBetween={24}
+              slidesPerView={3}
+              pagination={{
+                dynamicBullets: true,
+              }}
+              breakpoints={{
+                0: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+              }}
+            >
+              {items
+                .sort((a, b) => a.order - b.order)
+                .map((testimonial) => (
+                  <SwiperSlide key={testimonial.id}>
+                    <SingleTestimonial {...testimonial} />
+                  </SwiperSlide>
+                ))}
+            </Swiper>
+          ) : (
+            <p className="text-center text-gray-500">No testimonials available</p>
+          )}
+        </div>
       </div>
 			<div className="absolute right-0 top-5 z-[-1]">
         <svg

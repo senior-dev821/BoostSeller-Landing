@@ -1,4 +1,7 @@
-import SectionTitle from "../Common/SectionTitle";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import SectionTitle from '../Common/SectionTitle';
 
 type LegalSection = {
   id: number;
@@ -8,21 +11,36 @@ type LegalSection = {
   order: number;
 };
 
-type LegalPageProps = {
-  title: string;
-  welcome: string;
-  sections: LegalSection[];
-};
+const TermsPage: React.FC = () => {
+  const [title, setTitle] = useState('');
+  const [welcome, setWelcome] = useState('');
+  const [sections, setSections] = useState<LegalSection[]>([]);
 
-const TermsPage: React.FC<LegalPageProps> = ({ title, welcome, sections }) =>{
+  useEffect(() => {
+    const fetchPolicy = async () => {
+      try {
+        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/terms'); // Update this to your actual API endpoint
+        const data = await res.json();
+        setTitle(data.title);
+        setWelcome(data.welcome);
+        setSections(data.sections);
+      } catch (err) {
+        console.error('Failed to fetch legal policy:', err);
+      }
+    };
+
+    fetchPolicy();
+  }, []);
+
   return (
-		<section className="relative z-10 py-16 md:py-20 lg:py-28">
-			<div className="container max-w-5xl">
-			<SectionTitle title={title}  paragraph="" mb="80px" />
-			<div className="relative z-10 mb-10 overflow-hidden rounded-md bg-primary bg-opacity-10 p-9 md:p-10 lg:p-9 xl:p-10">
-				<p className="text-left text-lg font-medium italic dark:text-gray-200 text-gray-600">
-					{welcome}
-				</p>
+    <section className="relative z-10 py-16 md:py-20 lg:py-28">
+      <div className="container max-w-5xl">
+        <SectionTitle title={title} paragraph="" mb="80px" />
+
+        <div className="relative z-10 mb-10 overflow-hidden rounded-md bg-primary bg-opacity-10 p-9 md:p-10 lg:p-9 xl:p-10">
+          <p className="text-left text-lg font-medium italic dark:text-gray-200 text-gray-600">
+            {welcome}
+          </p>
 				<span className="absolute left-0 top-0 z-[-1]">
 					<svg
 						width="132"
@@ -165,24 +183,27 @@ const TermsPage: React.FC<LegalPageProps> = ({ title, welcome, sections }) =>{
 				</span>
 			</div>
 			<div className="max-w-full mx-auto px-4 py-12">
-				{sections.map((section, index) => (
-					<div key={section.id} className="mb-10" id={`section-${index}`}>
-						<h2 className="text-4xl font-semibold text-dark dark:text-white mb-2">
-						{index+1}. {section.title}
-						</h2>
-						<p className="text-body-color dark:text-white leading-relaxed mb-4">
-							{section.content}
-						</p>
-						{section.list && section.list.length > 0 && (
-							<ul className="list-disc list-inside space-y-1 text-body-color dark:text-white">
-								{section.list.map((item, index) => (
-									<li key={index}>{item}</li>
-								))}
-							</ul>
-						)}
-					</div>
-				))}
-			</div>
+				{sections.length > 0 &&
+					sections
+						.sort((a, b) => a.order - b.order)
+						.map((section, index) => (
+							<div key={section.id} className="mb-10" id={`section-${index}`}>
+								<h2 className="text-4xl font-semibold text-dark dark:text-white mb-2">
+									{index + 1}. {section.title}
+								</h2>
+								<p className="text-body-color dark:text-white leading-relaxed mb-4">
+									{section.content}
+								</p>
+								{section.list && section.list.length > 0 && (
+									<ul className="list-disc list-inside space-y-1 text-body-color dark:text-white">
+										{section.list.map((item, i) => (
+											<li key={i}>{item}</li>
+										))}
+									</ul>
+								)}
+							</div>
+						))}
+				</div>
 		</div>
 		<div className="absolute left-0 top-0 z-[-1]">
           <svg

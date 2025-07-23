@@ -1,18 +1,44 @@
-import NewsLetterBox from "./NewsLetterBox";
+'use client';
 
-type ContactProps = {
-  contact: {
-    title: string;
-    subtitle: string;
-  };
-  newsletter: {
-    title: string;
-    subtitle: string;
-    email: string;
-    phone: string;
-  };
+import React, { useEffect, useState } from 'react';
+import NewsLetterBox from './NewsLetterBox';
+
+type ContactData = {
+  title: string;
+  subtitle: string;
 };
-const Contact: React.FC<ContactProps> = ({ contact, newsletter }) => {
+
+type NewsletterData = {
+  title: string;
+  subtitle: string;
+  email: string;
+  phone: string;
+};
+
+const Contact: React.FC = () => {
+  const [contact, setContact] = useState<ContactData>({ title: '', subtitle: '' });
+  const [newsletter, setNewsletter] = useState<NewsletterData>({
+    title: '',
+    subtitle: '',
+    email: '',
+    phone: '',
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/contact'); // 🛠️ your API endpoint
+        const data = await res.json();
+        setContact(data.contact);
+        setNewsletter(data.newsletter);
+      } catch (err) {
+        console.error('Failed to load contact section:', err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <section id="contact" className="overflow-hidden py-16 md:py-20 lg:py-28">
       <div className="container">
@@ -20,23 +46,17 @@ const Contact: React.FC<ContactProps> = ({ contact, newsletter }) => {
           <div className="w-full px-4 lg:w-7/12 xl:w-8/12">
             <div
               className="wow fadeInUp shadow-three dark:bg-gray-dark mb-8 rounded-sm bg-white px-8 py-11 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px]"
-              data-wow-delay=".15s
-              "
+              data-wow-delay=".15s"
             >
               <h2 className="mb-3 text-2xl font-bold text-black dark:text-white sm:text-3xl lg:text-2xl xl:text-3xl">
                 {contact.title}
               </h2>
-              <p className="mb-12 text-base font-medium text-body-color">
-								{contact.subtitle}
-              </p>
+              <p className="mb-12 text-base font-medium text-body-color">{contact.subtitle}</p>
               <form>
                 <div className="-mx-4 flex flex-wrap">
                   <div className="w-full px-4 md:w-1/2">
                     <div className="mb-8">
-                      <label
-                        htmlFor="name"
-                        className="mb-3 block text-sm font-medium text-dark dark:text-white"
-                      >
+                      <label htmlFor="name" className="mb-3 block text-sm font-medium text-dark dark:text-white">
                         Your Name
                       </label>
                       <input
@@ -48,10 +68,7 @@ const Contact: React.FC<ContactProps> = ({ contact, newsletter }) => {
                   </div>
                   <div className="w-full px-4 md:w-1/2">
                     <div className="mb-8">
-                      <label
-                        htmlFor="email"
-                        className="mb-3 block text-sm font-medium text-dark dark:text-white"
-                      >
+                      <label htmlFor="email" className="mb-3 block text-sm font-medium text-dark dark:text-white">
                         Your Email
                       </label>
                       <input
@@ -63,10 +80,7 @@ const Contact: React.FC<ContactProps> = ({ contact, newsletter }) => {
                   </div>
                   <div className="w-full px-4">
                     <div className="mb-8">
-                      <label
-                        htmlFor="message"
-                        className="mb-3 block text-sm font-medium text-dark dark:text-white"
-                      >
+                      <label htmlFor="message" className="mb-3 block text-sm font-medium text-dark dark:text-white">
                         Your Message
                       </label>
                       <textarea
@@ -79,13 +93,14 @@ const Contact: React.FC<ContactProps> = ({ contact, newsletter }) => {
                   </div>
                   <div className="w-full px-4">
                     <button className="shadow-submit dark:shadow-submit-dark rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
-                      Book A Demo
+                      Submit Ticket
                     </button>
                   </div>
                 </div>
               </form>
             </div>
           </div>
+
           <div className="w-full px-4 lg:w-5/12 xl:w-4/12">
             <NewsLetterBox {...newsletter} />
           </div>
