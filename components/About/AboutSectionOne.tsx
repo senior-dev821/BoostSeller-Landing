@@ -64,7 +64,7 @@ const AboutSectionOne: React.FC = () => {
                 <div className="mx-[-12px] flex flex-wrap">
 									{/* Problems */}
 									<div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-										<h4 className="mb-4 text-xl font-semibold text-primary">{content[0]}</h4>
+										<h4 className="mb-4 text-xl font-semibold text-primary">{content[1]}</h4>
 										{listItems1.map((item, index) => (
 											<List key={`problem-${index}`} text={item} /> 
 										))}
@@ -72,7 +72,7 @@ const AboutSectionOne: React.FC = () => {
 
 									{/* Solutions */}
 									<div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-										<h4 className="mb-4 text-xl font-semibold text-primary">{content[1]}</h4>
+										<h4 className="mb-4 text-xl font-semibold text-primary">{content[2]}</h4>
 										{listItems2.map((item, index) => (
 											<List key={`solution-${index}`} text={item} /> 
 										))}
