@@ -3,25 +3,19 @@ type SingleFeatureProps = {
   title: string;
   description: string;
   icon: string;
-  highlighted?: boolean;
 };
 
 const SingleFeature: React.FC<SingleFeatureProps> = ({
   title,
   description,
   icon,
-  highlighted,
 }) => {
   return (
-    <div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-10">
-      <div
-        className={`rounded-xl p-8 shadow-lg h-full text-center ${
-          highlighted ? 'bg-primary text-white' : 'bg-white'
-        }`}
-      >
-        <div className="mb-5 text-5xl">{icon}</div> {/* Could replace with image or icon component */}
-        <h3 className="text-xl font-semibold mb-3">{title}</h3>
-        <p className="text-base">{description}</p>
+    <div className="w-full">
+      <div className="wow fadeInUp" data-wow-delay=".15s">
+        <div className="mb-10 flex h-[70px] w-[70px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">{icon}</div> {/* Could replace with image or icon component */}
+        <h3 className="mb-5 text-xl font-bold text-black dark:text-white sm:text-2xl lg:text-xl xl:text-2xl">{title}</h3>
+        <p className="pr-[10px] text-base font-medium leading-relaxed text-body-color">{description}</p>
       </div>
     </div>
   );

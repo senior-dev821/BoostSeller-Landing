@@ -15,7 +15,7 @@ const AboutSectionTwo: React.FC = () => {
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [contents, setContents] = useState<Content[]>([]);
-  const [imageUrl, setImageUrl] = useState('/images/about/whyboostseller.png'); // default fallback
+  // const [imageUrl, setImageUrl] = useState('/images/about/whyboostseller.png'); // default fallback
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +26,7 @@ const AboutSectionTwo: React.FC = () => {
         setTitle(data.sectionTwo.title);
         setSubtitle(data.sectionTwo.subtitle);
         setContents(data.sectionTwo.benefites);
-        setImageUrl(data.sectionTwo.imageUrl);
+        // setImageUrl(data.sectionTwo.imageUrl);
       } catch (err) {
         console.error('Failed to fetch AboutSectionTwo data:', err);
       }
@@ -46,7 +46,7 @@ const AboutSectionTwo: React.FC = () => {
               data-wow-delay=".15s"
             >
               <Image
-                src={imageUrl}
+                src="/images/about/whyboostseller.png"
                 alt="Why Choose BoostSeller"
                 fill
                 className=""
