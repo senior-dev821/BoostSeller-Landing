@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
         const data = await res.json();
         setTitles(data.titles);
         setSubtitle(data.subtitle);
-        setButtons(data.buttons);
+        setButtons(data.ctaButtons);
       } catch (error) {
         console.error('Failed to fetch hero content:', error);
       }
