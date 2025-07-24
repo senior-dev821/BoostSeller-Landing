@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
       try {
         const res = await fetch('https://cp.boostseller.ai/api/admin/contents/hero');
         const data = await res.json();
-        setTitles(data.titles);
+        setTitles(data.title);
         setSubtitle(data.subtitle);
         setButtons(data.ctaButtons);
       } catch (error) {
