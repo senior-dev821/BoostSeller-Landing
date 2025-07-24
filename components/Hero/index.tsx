@@ -22,6 +22,7 @@ const Hero: React.FC = () => {
         const res = await fetch('https://cp.boostseller.ai/api/admin/contents/hero');
         const data = await res.json();
         setTitles(data.title);
+				console.log(titles);
         setSubtitle(data.subtitle);
         setButtons(data.ctaButtons);
       } catch (error) {
@@ -31,7 +32,7 @@ const Hero: React.FC = () => {
 
     fetchData();
   }, []);
-	
+	console.log("2",titles);
   return (
     <>
       <section
