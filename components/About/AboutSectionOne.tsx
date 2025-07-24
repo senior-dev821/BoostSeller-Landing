@@ -34,7 +34,7 @@ const AboutSectionOne: React.FC = () => {
 
         setTitle(data.sectionOne.title);
         setSubtitle(data.sectionOne.subtitle);
-        setContent(data.sectionOne.content);        // e.g. ['Problems', 'Solutions']
+        setContent(data.sectionOne.contents);        // e.g. ['Problems', 'Solutions']
         setListItems1(data.sectionOne.listItems1);  // array of strings
         setListItems2(data.sectionOne.listItems2);  // array of strings
       } catch (error) {
