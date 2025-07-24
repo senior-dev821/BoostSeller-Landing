@@ -25,7 +25,7 @@ const AboutSectionTwo: React.FC = () => {
 
         setTitle(data.sectionTwo.title);
         setSubtitle(data.sectionTwo.subtitle);
-        setContents(data.sectionTwo.contents);
+        setContents(data.sectionTwo.benefites);
         setImageUrl(data.sectionTwo.imageUrl);
       } catch (err) {
         console.error('Failed to fetch AboutSectionTwo data:', err);
