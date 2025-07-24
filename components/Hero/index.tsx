@@ -21,8 +21,14 @@ const Hero: React.FC = () => {
       try {
         const res = await fetch('https://cp.boostseller.ai/api/admin/contents/hero');
         const data = await res.json();
-        setTitles(data.title);
-				console.log(titles);
+        if (Array.isArray(data.title)) {
+					setTitles(data.title);
+				} else if (typeof data.title === 'string') {
+					setTitles([data.title]);
+				} else {
+					setTitles([]); // fallback empty array
+				}
+	
         setSubtitle(data.subtitle);
         setButtons(data.ctaButtons);
       } catch (error) {
@@ -32,7 +38,7 @@ const Hero: React.FC = () => {
 
     fetchData();
   }, []);
-	console.log("2",titles);
+
   return (
     <>
       <section
