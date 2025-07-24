@@ -30,7 +30,7 @@ const Testimonials: React.FC = () => {
         const data = await res.json();
         setTitle(data.title);
         setSubtitle(data.subtitle);
-        setItems(data.items);
+        setItems(data.testimonials);
       } catch (error) {
         console.error('Failed to fetch testimonials:', error);
       }
