@@ -11,7 +11,7 @@ export default function StripePage() {
   const handleCheckout = async () => {
     setLoading(true);
 
-    const response = await fetch(`cp.boostseller.ai/api/payment/stripe`, {
+    const response = await fetch(`cp.boostseller.ai/api/admin/payment/stripe`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ plan: 'pro_monthly' }),
