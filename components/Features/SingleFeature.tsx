@@ -2,7 +2,7 @@
 type SingleFeatureProps = {
   title: string;
   description: string;
-  icon: string;
+  icon: React.ReactNode;
 };
 
 const SingleFeature: React.FC<SingleFeatureProps> = ({
