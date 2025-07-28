@@ -88,11 +88,15 @@ const Hero: React.FC = () => {
 					<Image
 						src="/images/hero/hero_dark.png"
 						alt="Background"
+						width={500}
+						height={400}
 						className="w-[500px] max-w-full h-auto object-contain hidden dark:block opacity-80"
 					/>
 					<Image
 						src="/images/hero/hero_light.png"
 						alt="Background"
+						width={500}
+						height={400}
 						className="w-[500px] max-w-full h-auto block dark:hidden object-contain opacity-100"
 					/>
 				</div>
