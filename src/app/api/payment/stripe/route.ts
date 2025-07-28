@@ -3,20 +3,6 @@ import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-const allowedOrigin = 'https://boostseller.ai'; // or specify frontend domain
-
-// Handle CORS preflight request
-export async function OPTIONS() {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': allowedOrigin,
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
-}
-
 // Handle POST request (checkout session creation)
 export async function POST(req: NextRequest) {
   try {
@@ -54,11 +40,6 @@ export async function POST(req: NextRequest) {
       { sessionId: session.id },
       {
         status: 200,
-        headers: {
-          'Access-Control-Allow-Origin': allowedOrigin,
-          'Access-Control-Allow-Methods': 'POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type',
-        },
       }
     );
   } catch (err) {
