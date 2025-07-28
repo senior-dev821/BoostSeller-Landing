@@ -16,35 +16,22 @@ const Hero: React.FC = () => {
   const [subtitle, setSubtitle] = useState('');
   const [buttons, setButtons] = useState<HeroButton[]>([]);
 
-	const fetchData = async () => {
-		try {
-			const res = await fetch('/api/contents/hero');
-			const data = await res.json();
-			if (Array.isArray(data.title)) {
-				console.log("1");
-				setTitles(data.title);
-				console.log("Fetched array:", data.title);
-			} else if (typeof data.title === 'string') {
-				console.log("2");
-				setTitles([data.title]);
-				console.log("Fetched array:", data.title);
-			} else {
-				console.log("3");
-				setTitles([]); // fallback empty array
-				console.log("Fetched array:", data.title);
-			}
-
-			setSubtitle(data.subtitle);
-			setButtons(data.ctaButtons);
-		} catch (error) {
-			console.error('Failed to fetch hero content:', error);
-		}
-	};
+	
   useEffect(() => {
-    
+    const fetchData = async () => {
+			try {
+				const res = await fetch('/api/contents/hero');
+				const data = await res.json();
+	
+				setTitles(data.title);
+				setSubtitle(data.subtitle);
+				setButtons(data.ctaButtons);
+			} catch (error) {
+				console.error('Failed to fetch hero content:', error);
+			}
+		};
 
     fetchData();
-		console.log("result = ", titles);
   }, []);
 
   return (
