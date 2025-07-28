@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Typewriter } from 'react-simple-typewriter';
+import Image from 'next/image';
 
 type HeroButton = {
   id: number;
@@ -84,12 +85,12 @@ const Hero: React.FC = () => {
           </div>
         </div>
 				<div className="absolute inset-0 flex justify-start items-center z-[-1]">
-					<img
+					<Image
 						src="/images/hero/hero_dark.png"
 						alt="Background"
 						className="w-[500px] max-w-full h-auto object-contain hidden dark:block opacity-80"
 					/>
-					<img
+					<Image
 						src="/images/hero/hero_light.png"
 						alt="Background"
 						className="w-[500px] max-w-full h-auto block dark:hidden object-contain opacity-100"
