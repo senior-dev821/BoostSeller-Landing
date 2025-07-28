@@ -26,7 +26,7 @@ const Testimonials: React.FC = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/testimonials'); // Update with your actual API route
+        const res = await fetch('/api/contents/testimonials'); // Update with your actual API route
         const data = await res.json();
         setTitle(data.title);
         setSubtitle(data.subtitle);

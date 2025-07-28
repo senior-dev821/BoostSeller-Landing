@@ -87,7 +87,7 @@ const Features: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/features'); // 🔁 update this to your real endpoint
+        const res = await fetch('/api/contents/features'); // 🔁 update this to your real endpoint
         const data = await res.json();
 
         setTitle(data.title);

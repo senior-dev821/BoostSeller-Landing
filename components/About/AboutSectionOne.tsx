@@ -29,7 +29,7 @@ const AboutSectionOne: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/about'); // change to your actual endpoint
+        const res = await fetch('/api/contents/about'); // change to your actual endpoint
         const data = await res.json();
 
         setTitle(data.sectionOne.title);

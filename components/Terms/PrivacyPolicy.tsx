@@ -19,7 +19,7 @@ const PolicyPage: React.FC = () => {
   useEffect(() => {
     const fetchPolicy = async () => {
       try {
-        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/policy'); // Update this to your actual API endpoint
+        const res = await fetch('/api/contents/policy'); // Update this to your actual API endpoint
         const data = await res.json();
         setTitle(data.title);
         setWelcome(data.welcome);

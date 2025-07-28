@@ -30,7 +30,7 @@ const Pricing: React.FC = () => {
   useEffect(() => {
     const fetchPricing = async () => {
       try {
-        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/pricing'); // Update with your actual API
+        const res = await fetch('/api/contents/pricing'); // Update with your actual API
         const data = await res.json();
 
         setTitle(data.title);

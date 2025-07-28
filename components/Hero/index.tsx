@@ -16,27 +16,35 @@ const Hero: React.FC = () => {
   const [subtitle, setSubtitle] = useState('');
   const [buttons, setButtons] = useState<HeroButton[]>([]);
 
+	const fetchData = async () => {
+		try {
+			const res = await fetch('/api/contents/hero');
+			const data = await res.json();
+			if (Array.isArray(data.title)) {
+				console.log("1");
+				setTitles(data.title);
+				console.log("Fetched array:", data.title);
+			} else if (typeof data.title === 'string') {
+				console.log("2");
+				setTitles([data.title]);
+				console.log("Fetched array:", data.title);
+			} else {
+				console.log("3");
+				setTitles([]); // fallback empty array
+				console.log("Fetched array:", data.title);
+			}
+
+			setSubtitle(data.subtitle);
+			setButtons(data.ctaButtons);
+		} catch (error) {
+			console.error('Failed to fetch hero content:', error);
+		}
+	};
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/hero');
-        const data = await res.json();
-        if (Array.isArray(data.title)) {
-					setTitles(data.title);
-				} else if (typeof data.title === 'string') {
-					setTitles([data.title]);
-				} else {
-					setTitles([]); // fallback empty array
-				}
-	
-        setSubtitle(data.subtitle);
-        setButtons(data.ctaButtons);
-      } catch (error) {
-        console.error('Failed to fetch hero content:', error);
-      }
-    };
+    
 
     fetchData();
+		console.log("result = ", titles);
   }, []);
 
   return (
@@ -53,7 +61,8 @@ const Hero: React.FC = () => {
                 data-wow-delay=".2s"
               >
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-									{/* <Typewriter
+								{Array.isArray(titles) && titles.length > 0 ? (
+									<Typewriter
 										words={titles}
 										loop={0}
 										cursor
@@ -61,24 +70,25 @@ const Hero: React.FC = () => {
 										typeSpeed={70}
 										deleteSpeed={50}
 										delaySpeed={1000}
-									/> */}
-									{titles}
+									/>
+									) : (
+										<span></span> // or fallback text like "..."
+									)}
+
+									{/* {titles} */}
 								</h1>
                 <h3 className="dark:text-body-color-dark mb-12 text-base !leading-relaxed text-body-color sm:text-lg md:text-xl">
 									{subtitle}
                 </h3>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
 									{buttons?.map((btn) => (
-										<Link href={btn.url} key={btn.id}>
-											<a
+										<Link href={btn.url} key={btn.id}
 												className={`rounded px-6 py-3 text-base font-medium transition duration-300 ${
 													btn.type === 'primary'
 														? 'rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80'
 														: 'inline-block rounded-sm bg-black px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-white/10 dark:text-white dark:hover:bg-white/5'
-												}`}
-											>
+												}`}>
 												{btn.text}
-											</a>
 										</Link>
 									))}
                 </div>

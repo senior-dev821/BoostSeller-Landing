@@ -1,6 +1,8 @@
 // components/Pricing/PricingBox.tsx
-import Link from 'next/link';
+// import Link from 'next/link';
 import OfferList from './OfferList';
+import { useRouter } from 'next/navigation'; // for Next.js App Router
+// import { useEffect } from 'react';
 
 type PlanFeature = {
   id: number;
@@ -30,6 +32,12 @@ const PricingBox: React.FC<PricingBoxProps> = ({
   ctaText,
   ctaUrl,
 }) => {
+	const router = useRouter();
+
+  const handleSelectPlan = () => {
+    localStorage.setItem('selectedPlan', tag); // e.g. "free", "pro", "pro-annual"
+    router.push(`${ctaUrl}`);
+  };
 
   return (
     <div className="w-full">
@@ -47,14 +55,13 @@ const PricingBox: React.FC<PricingBoxProps> = ({
           </h4>
         </div>
         <p className="mb-7 text-base text-body-color">{description}</p>
-				<Link href={ctaUrl}>
-					<div className="mb-8 border-b border-body-color border-opacity-10 pb-8 dark:border-white dark:border-opacity-10">
-						<button className="flex w-full items-center justify-center rounded-sm bg-primary p-3 text-base font-semibold text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">
-							{ctaText}
-						</button>
-					</div>
-				</Link>
-        
+				<div className="mb-8 border-b border-body-color border-opacity-10 pb-8 dark:border-white dark:border-opacity-10">
+					<button className="flex w-full items-center justify-center rounded-sm bg-primary p-3 text-base font-semibold text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp"
+					onClick={handleSelectPlan}>
+						{ctaText}
+					</button>
+				</div>
+
         <div className="mb-6 text-left">
 					{features.map((feature) => (
 						<OfferList

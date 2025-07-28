@@ -30,6 +30,8 @@ const SingleTestimonial: React.FC<SingleTestimonialProps> = ({
       </span>,
     );
   }
+
+	const isValidAvatar = avatarUrl && avatarUrl.trim() !== "";
   return (
 		<div className="w-full">
 		<div
@@ -42,7 +44,17 @@ const SingleTestimonial: React.FC<SingleTestimonialProps> = ({
 			</p>
 			<div className="flex items-center">
 				<div className="relative mr-4 h-[50px] w-full max-w-[50px] overflow-hidden rounded-full">
-					<Image src={avatarUrl} alt={name} fill />
+					{isValidAvatar ? (
+              <Image
+                src={avatarUrl}
+                alt={name}
+                fill
+              />
+            ) : (
+              <div className="h-[50px] w-full max-w-[50px] bg-gray-300 rounded-full flex items-center justify-center text-sm text-gray-600">
+                No Image
+              </div>
+            )}
 				</div>
 				<div className="w-full">
 					<h3 className="mb-1 text-lg font-semibold text-dark dark:text-white lg:text-base xl:text-lg">

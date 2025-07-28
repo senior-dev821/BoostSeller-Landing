@@ -29,7 +29,7 @@ const Video: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/howitworks'); // 👈 Update this to your real endpoint
+        const res = await fetch('/api/contents/howitworks'); // 👈 Update this to your real endpoint
         const data = await res.json();
         setTitle(data.title);
         setSubtitle(data.subtitle);

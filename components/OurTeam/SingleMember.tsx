@@ -13,13 +13,26 @@ const SingleMember: React.FC<SingleMemberProps> = ({
   bio,
   avatarUrl,
 }) => {
+	const isValidAvatar = avatarUrl && avatarUrl.trim() !== "";
   return (
     <div className="w-full h-full">
 			<div className="group bg-white dark:bg-dark p-6 rounded-sm shadow-two dark:shadow-three hover:shadow-one transition-all duration-300 min-h-[220px]">
 				<div className="flex items-start space-x-4">
 					{/* Image */}
 					<div className="relative w-[120px] h-[168px] overflow-hidden rounded-md flex-shrink-0">
-						<Image src={avatarUrl} alt={name} width={120} height={168} className="object-cover rounded-md" />
+					{isValidAvatar ? (
+              <Image
+                src={avatarUrl}
+                alt={name}
+                width={120}
+                height={168}
+                className="object-cover rounded-md"
+              />
+            ) : (
+              <div className="w-[120px] h-[168px] bg-gray-300 rounded-md flex items-center justify-center text-sm text-gray-600">
+                No Image
+              </div>
+            )}
 					</div>
 
 					{/* Text */}

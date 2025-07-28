@@ -19,7 +19,7 @@ const TermsPage: React.FC = () => {
   useEffect(() => {
     const fetchPolicy = async () => {
       try {
-        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/terms'); // Update this to your actual API endpoint
+        const res = await fetch('/api/contents/terms'); // Update this to your actual API endpoint
         const data = await res.json();
         setTitle(data.title);
         setWelcome(data.welcome);

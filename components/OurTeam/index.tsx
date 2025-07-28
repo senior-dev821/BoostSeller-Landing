@@ -25,7 +25,7 @@ const TeamMembers: React.FC = () => {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/ourteam'); // change this to your endpoint
+        const res = await fetch('/api/contents/ourteam'); // change this to your endpoint
         const data = await res.json();
         setTitle(data.title);
         setSubtitle(data.subtitle);

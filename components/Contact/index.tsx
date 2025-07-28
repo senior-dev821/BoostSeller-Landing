@@ -27,7 +27,7 @@ const Contact: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('https://cp.boostseller.ai/api/admin/contents/contact'); // 🛠️ your API endpoint
+        const res = await fetch('/api/contents/contact'); // 🛠️ your API endpoint
         const data = await res.json();
         setContact(data.contact);
         setNewsletter(data.newsletter);
