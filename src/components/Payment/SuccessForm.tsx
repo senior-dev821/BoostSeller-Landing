@@ -31,6 +31,18 @@ export default function PaymentSuccess() {
 			<section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
 				<div className="container">
 					<div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-6 py-10 dark:bg-dark sm:p-[60px]">
+						<div className="flex justify-center mb-6">
+							<svg
+								className="w-16 h-16 text-green-500"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								viewBox="0 0 24 24"
+							>
+								<circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+								<path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
+							</svg>
+						</div>
 						<h2 className="text-2xl font-bold mb-6">Your Payment is Successfully Done!</h2>
 					</div>
 				</div>
