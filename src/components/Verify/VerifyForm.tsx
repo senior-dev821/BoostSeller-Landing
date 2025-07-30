@@ -35,7 +35,7 @@ const VerifyForm = () => {
 				throw new Error("Plan not selected. Please go back to pricing.");
 			}
 			
-			if (selectedPlan === "free") {
+			if (selectedPlan === "Free") {
 				console.log("Free plan selected");
 				// ➕ Handle free plan
 				const freeRes = await fetch("/api/payment/complete-free", {
