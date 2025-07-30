@@ -1,5 +1,6 @@
 import VerifyForm from "@/components/Verify/VerifyForm";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Verify | BoostSeller",
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
 const VerifyPage = () => {
   return (
     <>
-      <VerifyForm />
+		<Suspense fallback={<div>Loading...</div>}>
+			<VerifyForm />
+		</Suspense>
     </>
   );
 };
