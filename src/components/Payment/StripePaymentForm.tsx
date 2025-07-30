@@ -1,37 +1,60 @@
-'use client';
+"use client";
 
-import { loadStripe } from '@stripe/stripe-js';
-import { useState } from 'react';
+import { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+);
 
-export default function StripePage() {
+export default function PaymentPage() {
   const [loading, setLoading] = useState(false);
 
   const handleCheckout = async () => {
     setLoading(true);
 
-    const response = await fetch(`/api/admin/payment/stripe`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plan: 'pro_monthly' }),
-    });
+    try {
+      const res = await fetch("/api/payment/stripe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerEmail: "leodone113@gmail.com", // You can make this dynamic
+          items: [{ name: "Pro Plan", price: 99000, quantity: 1}],
+        }),
+      });
 
-    const data = await response.json();
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error || "Failed to create checkout session");
+      }
 
-    const stripe = await stripePromise;
-    await stripe?.redirectToCheckout({ sessionId: data.sessionId });
+      const { sessionId } = await res.json();
+
+      const stripe = await stripePromise;
+      if (!stripe) throw new Error("Stripe failed to initialize");
+
+      await stripe.redirectToCheckout({ sessionId });
+    } catch (err: any) {
+      console.error("Checkout error:", err.message);
+      alert("Something went wrong during checkout. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="text-center space-y-6">
-      <h2 className="text-xl font-semibold">Stripe Checkout</h2>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Buy Sample Product</h1>
       <button
         onClick={handleCheckout}
-        className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800"
         disabled={loading}
+        style={{
+          padding: "10px 20px",
+          fontSize: "16px",
+          cursor: loading ? "not-allowed" : "pointer",
+        }}
       >
-        {loading ? 'Redirecting…' : 'Pay $149 (Pro Monthly)'}
+        {loading ? "Redirecting..." : "Checkout ($20)"}
       </button>
     </div>
   );

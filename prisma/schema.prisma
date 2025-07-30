@@ -14,18 +14,56 @@ datasource db {
 }
 
 ///////////////Payment////////////////////
-model LandingUser {
-  id          Int       @id @default(autoincrement())
-  name        String    @db.VarChar(100)
-  email       String    @unique @db.VarChar(100)
-  password    String    @db.VarChar(255)
-  role        String    @db.VarChar(50)
-  phoneNumber String    @map("phone_number") @db.VarChar(15)
-  planId      Int?      @map("plan_id")
-  paymentType Int?      @map("payment_type")
-  startAt     DateTime? @map("start_date")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at")
+model User {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(100)
+  email       String   @unique @db.VarChar(100)
+  password    String   @db.VarChar(255)
+  role        String   @db.VarChar(50)
+  phoneNumber String   @map("phone_number") @db.VarChar(15)
+  isVerified  Boolean  @default(false) @map("is_verified")
+  isApproved  Boolean  @default(false) @map("is_approved")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+  avatarPath  String?  @map("avatar_path") @db.VarChar(1000)
+  fcmToken    String?  @db.VarChar(255)
+
+  // relation
+  admin     Admin?
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique @map("user_id")
+  teamName  String?  @db.VarChar(100)
+  endDate   DateTime @default(now()) @map("approve_end_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id])
+
+  // ✅ New relation
+  payments  Payment[]
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  adminId   Int      @map("admin_id")
+  admin     Admin    @relation(fields: [adminId], references: [id])
+  plan      String   @db.VarChar(50)
+  amount    Int
+  status    String   @db.VarChar(50)  // e.g. "paid", "failed"
+  paymentId String   @unique @db.VarChar(100) // e.g. Stripe session ID
+  createdAt DateTime @default(now()) @map("created_at")
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  email     String?
+  phone     String?
+  code      String
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
 }
 
 /////////////// Contents for landing page ////////////////
@@ -148,7 +186,7 @@ model PricingSection {
 
 model PricingPlan {
   id          Int            @id @default(autoincrement())
-  tag         String
+  tag         String  @unique
   description String
   price       Float
   duration    String
