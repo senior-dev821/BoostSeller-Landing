@@ -47,15 +47,12 @@ export async function POST(req: Request) {
     });
 
     if (
-      lastPayment &&
-      lastPayment.plan === "free" &&
-      selectedPlan === "free"
+      lastPayment && selectedPlan === "Free"
     ) {
-			console.log("sign in 7");
       return NextResponse.json(
         {
           message:
-            "You are already on a free plan. Please select a different plan to continue.",
+            "You are already on a plan. Please select a different plan to continue.",
         },
         { status: 400 }
       );
