@@ -47,7 +47,7 @@ const VerifyForm = () => {
 				const freeData = await freeRes.json();
 				if (!freeRes.ok) throw new Error(freeData.message);
 			
-				router.push("/"); // Or your success page
+				router.push("https://cp.boostseller.ai"); // Or your success page
 			} else {
 				console.log("Pro plan selected", selectedPlan);
 				// 🔁 Handle paid plan via Stripe

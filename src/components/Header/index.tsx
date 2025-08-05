@@ -5,14 +5,17 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
+import { RocketIcon, LogInIcon } from "lucide-react";
 
 const Header = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const navbarToggleHandler = () => {
-    setNavbarOpen(!navbarOpen);
-  };
-
   const [sticky, setSticky] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const linkHref = isHome ? "#pricing" : "/pricing";
+
+  const navbarToggleHandler = () => setNavbarOpen(!navbarOpen);
+
   const handleStickyNavbar = () => {
     if (window.scrollY >= 80) {
       setSticky(true);
@@ -34,9 +37,6 @@ const Header = () => {
     }
   };
 
-  const pathname = usePathname();
-  const isHome = pathname === "/";
-
   return (
     <header
       className={`header left-0 top-0 z-40 flex w-full items-center ${
@@ -47,6 +47,7 @@ const Header = () => {
     >
       <div className="container">
         <div className="relative -mx-4 flex items-center justify-between">
+          {/* Logo */}
           <div className="w-60 max-w-full px-4 xl:mr-12">
             <Link
               href="/"
@@ -70,75 +71,110 @@ const Header = () => {
               />
             </Link>
           </div>
-          <div className="flex w-full items-center justify-between px-4">
-            <div>
-              <button
-                onClick={navbarToggleHandler}
-                id="navbarToggler"
-                aria-label="Mobile Menu"
-                className="absolute right-4 top-1/2 block translate-y-[-50%] rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
-              >
-                <span
-                  className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white ${
-                    navbarOpen ? " top-[7px] rotate-45" : ""
-                  }`}
-                />
-                <span
-                  className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white ${
-                    navbarOpen ? "opacity-0" : ""
-                  }`}
-                />
-                <span
-                  className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white ${
-                    navbarOpen ? " top-[-8px] -rotate-45" : ""
-                  }`}
-                />
-              </button>
-              <nav
-                id="navbarCollapse"
-                className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] border-body-color/50 bg-white px-6 py-4 duration-300 dark:border-body-color/20 dark:bg-dark lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
-                  navbarOpen
-                    ? "visibility top-full opacity-100"
-                    : "invisible top-[120%] opacity-0"
-                }`}
-              >
-                <ul className="block lg:flex lg:space-x-12">
-                  {menuData.map((menuItem, index) => {
-                    const href = isHome
-                      ? menuItem.path
-                      : `/${menuItem.path.replace(/^#/, "")}`; // ensures anchor links
-                    const isActive =
-                      pathname === menuItem.path ||
-                      pathname === `/${menuItem.path.replace(/^#/, "")}`;
 
-                    return (
-                      <li key={index} className="group relative">
-                        <Link
-                          href={href}
-                          className={`flex py-2 text-base lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${
-                            isActive
-                              ? "text-primary dark:text-white"
-                              : "text-dark hover:text-primary dark:text-white/70 dark:hover:text-white"
-                          }`}
-                        >
-                          {menuItem.title}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </nav>
-            </div>
-            <div className="flex items-center justify-end pr-16 lg:pr-0">
-              <Link
-                href="#signup"
-                className="ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:block md:px-9 lg:px-6 xl:px-9"
-              >
-                Get Started
-              </Link>
-              <div>
-                <ThemeToggler />
+          {/* Navbar + Actions */}
+          <div className="flex w-full items-center justify-end px-4">
+            {/* Desktop Nav */}
+            <nav
+              id="navbarCollapse"
+              className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] border-body-color/50 bg-white px-6 py-4 duration-300 dark:border-body-color/20 dark:bg-dark lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
+                navbarOpen
+                  ? "visibility top-full opacity-100"
+                  : "invisible top-[120%] opacity-0"
+              }`}
+            >
+              <ul className="block lg:flex lg:space-x-12">
+                {menuData.map((menuItem, index) => {
+                  const href = isHome
+                    ? menuItem.path
+                    : `/${menuItem.path.replace(/^#/, "")}`;
+                  const isActive =
+                    pathname === menuItem.path ||
+                    pathname === `/${menuItem.path.replace(/^#/, "")}`;
+
+                  return (
+                    <li key={index} className="group relative">
+                      <Link
+                        href={href}
+                        className={`flex py-2 text-base lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${
+                          isActive
+                            ? "text-primary dark:text-white"
+                            : "text-dark hover:text-primary dark:text-white/70 dark:hover:text-white"
+                        }`}
+                      >
+                        {menuItem.title}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2 pl-4 md:pl-8">
+              {/* Desktop buttons */}
+              <div className="hidden md:flex gap-2">
+                <Link
+                  href={linkHref}
+                  className="rounded-sm bg-primary px-8 py-3 text-base font-medium text-white transition duration-300 hover:bg-opacity-90"
+                >
+                  Get Started
+                </Link>
+                <Link
+                  href="https://cp.boostseller.ai"
+                  className="rounded-sm border border-primary bg-transparent px-8 py-3 text-base font-medium text-primary transition duration-300 hover:bg-primary hover:text-white"
+                >
+                  Admin Panel
+                </Link>
               </div>
+							{/* Theme toggler */}
+							<div>
+								<ThemeToggler />
+							</div>
+              {/* Mobile icon buttons */}
+              <div className="flex md:hidden gap-2">
+								{/* Hamburger menu */}
+								<button
+									onClick={navbarToggleHandler}
+									id="navbarToggler"
+									aria-label="Mobile Menu"
+									className="block lg:hidden ml-1 p-2"
+								>
+									<span
+										className={`block h-0.5 w-[22px] my-1 bg-black dark:bg-white transition duration-300 ${
+											navbarOpen ? "rotate-45 translate-y-[6px]" : ""
+										}`}
+									/>
+									<span
+										className={`block h-0.5 w-[22px] my-1 bg-black dark:bg-white transition duration-300 ${
+											navbarOpen ? "opacity-0" : ""
+										}`}
+									/>
+									<span
+										className={`block h-0.5 w-[22px] my-1 bg-black dark:bg-white transition duration-300 ${
+											navbarOpen ? "-rotate-45 -translate-y-[6px]" : ""
+										}`}
+									/>
+								</button>	
+								{/* Theme toggler */}
+															
+								<Link
+									href={linkHref}
+									aria-label="Get Started"
+									title="Get Started"
+									className="p-2 text-primary hover:text-white hover:bg-primary rounded-full transition"
+								>
+									<RocketIcon size={20} />
+								</Link>
+								<Link
+									href="https://cp.boostseller.ai"
+									aria-label="Admin Panel"
+									title="Admin Panel"
+									className="p-2 text-primary hover:text-white hover:bg-primary rounded-full transition"
+								>
+									<LogInIcon size={20} />
+								</Link>
+							</div>              
             </div>
           </div>
         </div>

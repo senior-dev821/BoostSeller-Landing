@@ -65,9 +65,10 @@ const Hero: React.FC = () => {
 
 									{/* {titles} */}
 								</h1>
-                <h3 className="dark:text-body-color-dark mb-12 text-base !leading-relaxed text-body-color sm:text-lg md:text-xl">
+                <h3 className="mb-12 text-base sm:text-lg md:text-xl leading-relaxed text-gray-dark dark:text-gray-100 bg-white/70 dark:bg-black/10 px-4 py-3 rounded-md shadow-md backdrop-blur-sm">
 									{subtitle}
-                </h3>
+								</h3>
+
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
 									{buttons?.map((btn) => (
 										<Link href={btn.url} key={btn.id}

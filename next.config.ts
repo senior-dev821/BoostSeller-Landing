@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: 'https',
-				hostname: 'boostseller.ai',
+				hostname: 'cp.boostseller.ai',
 			},
 		],
 	},

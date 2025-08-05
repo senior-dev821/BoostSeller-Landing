@@ -19,7 +19,7 @@ export default function PaymentSuccess() {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          router.push("/");
+          router.push("https://cp.boostseller.ai");
         } else {
           console.error(data.message);
         }

@@ -96,22 +96,16 @@ const Video: React.FC = () => {
             <div className="wow fadeInUp mx-auto max-w-[770px] overflow-hidden rounded-md" data-wow-delay=".15s">
               <div className="relative aspect-[77/46] items-center justify-center">
                 {isOpen ? (
-                  <video
-                    src={videoUrl}
-                    controls
-                    autoPlay
-                    className="absolute top-0 left-0 h-full w-full object-cover rounded-md"
-                  />
-									// <iframe
-									// 	width="100%"
-									// 	height="100%"
-									// 	src="https://www.youtube.com/embed/L61p2uyiMSo?autoplay=1&rel=0"
-									// 	title="YouTube video player"
-									// 	frameBorder="0"
-									// 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-									// 	allowFullScreen
-									// 	className="absolute top-0 left-0 h-full w-full"
-									// ></iframe>
+									<iframe
+										width="100%"
+										height="100%"
+										src={videoUrl}
+										title="YouTube video player"
+										frameBorder="0"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+										allowFullScreen
+										className="absolute top-0 left-0 h-full w-full"
+									></iframe>
                 ) : (
                   <>
                     <Image

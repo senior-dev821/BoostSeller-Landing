@@ -56,11 +56,11 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
-      // metadata: {
-      //   userId: user.id.toString(),
-      //   planTag: plan.tag,
-      // },
-      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/payment/success`,
+      metadata: {
+        userId: user.id.toString(),
+        planTag: plan.tag,
+      },
+      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/payment/faild`,
     });
 

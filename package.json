@@ -26,7 +26,8 @@
     "react-slick": "^0.30.3",
     "stripe": "^18.3.0",
     "swiper": "^11.2.9",
-    "tailwind-scrollbar": "^3.1.0"
+    "tailwind-scrollbar": "^3.1.0",
+		"lucide-react": "^0.511.0"
   },
   "devDependencies": {
     "@types/node": "^20.8.9",

@@ -1,5 +1,4 @@
-// components/Common/PhoneCarousel.tsxs
-"use client"; // only if you're in app/ folder, to make sure Swiper runs on client side
+"use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -8,72 +7,37 @@ import "swiper/css";
 
 export default function PhoneCarousel() {
   return (
-    <div className="relative mx-auto h-[620px] w-[580px]">
-			<Image
-				src="/images/phones/phone_frame.png"
-				alt="Phone Frame"
-				fill
-				className="z-1"
-			/>
-			<div className="absolute top-[2.4%] left-[27%] h-[85%] w-[42%] z-[-1] overflow-hidden rounded-[30px]">
-				{/* Swiper inside phone frame */}
-				<Swiper
-					modules={[Autoplay]}
-					slidesPerView={1}
-					loop
-					autoplay={{ delay: 3000, disableOnInteraction: false }}
-					className="h-full w-full"
-				>
-					<SwiperSlide>
-						<Image
-							src="/images/phones/phone1.jpg"
-							alt="Screen 1"
-							fill
-							className="object-cover"
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<Image
-							src="/images/phones/phone2.jpg"
-							alt="Screen 2"
-							fill
-							className="object-cover"
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<Image
-							src="/images/phones/phone3.jpg"
-							alt="Screen 3"
-							fill
-							className="object-cover"
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<Image
-							src="/images/phones/phone4.jpg"
-							alt="Screen 4"
-							fill
-							className="object-cover"
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<Image
-							src="/images/phones/phone5.jpg"
-							alt="Screen 5"
-							fill
-							className="object-cover"
-						/>
-					</SwiperSlide>
-					<SwiperSlide>
-						<Image
-							src="/images/phones/phone6.jpg"
-							alt="Screen 6"
-							fill
-							className="object-cover"
-						/>
-					</SwiperSlide>
-				</Swiper>
-			</div>
-		</div>
+    <div className="relative mx-auto w-full max-w-[400px] md:max-w-[500px] lg:max-w-[580px] aspect-[29/31]">
+      {/* Phone Frame */}
+      <Image
+        src="/images/phones/phone_frame.png"
+        alt="Phone Frame"
+        fill
+        className="z-10 object-contain"
+        priority
+      />
+
+      {/* Swiper inside phone frame */}
+      <div className="absolute top-[6.5%] left-[27%] h-[78%] w-[42%] z-[-1] overflow-hidden rounded-[12px] md:rounded-[20px] lg:rounded-[25px]">
+        <Swiper
+          modules={[Autoplay]}
+          slidesPerView={1}
+          loop
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          className="h-full w-full"
+        >
+          {[1, 2, 3, 4, 5, 6].map((num) => (
+            <SwiperSlide key={num}>
+              <Image
+                src={`/images/phones/phone${num}.jpg`}
+                alt={`Screen ${num}`}
+                fill
+                className="object-cover"
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
   );
 }

@@ -46,14 +46,16 @@ const SingleTestimonial: React.FC<SingleTestimonialProps> = ({
 				<div className="relative mr-4 h-[50px] w-full max-w-[50px] overflow-hidden rounded-full">
 					{isValidAvatar ? (
               <Image
-                src={avatarUrl}
+                src={`https://cp.boostseller.ai${avatarUrl}`}
                 alt={name}
                 fill
               />
             ) : (
-              <div className="h-[50px] w-full max-w-[50px] bg-gray-300 rounded-full flex items-center justify-center text-sm text-gray-600">
-                No Image
-              </div>
+              <Image
+                src={`/images/avatar/default.jpg`}
+                alt={name}
+                fill
+              />
             )}
 				</div>
 				<div className="w-full">

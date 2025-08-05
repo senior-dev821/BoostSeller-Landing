@@ -22,16 +22,20 @@ const SingleMember: React.FC<SingleMemberProps> = ({
 					<div className="relative w-[120px] h-[168px] overflow-hidden rounded-md flex-shrink-0">
 					{isValidAvatar ? (
               <Image
-                src={avatarUrl}
+                src={`https://cp.boostseller.ai${avatarUrl}`}
                 alt={name}
                 width={120}
                 height={168}
                 className="object-cover rounded-md"
               />
             ) : (
-              <div className="w-[120px] h-[168px] bg-gray-300 rounded-md flex items-center justify-center text-sm text-gray-600">
-                No Image
-              </div>
+              <Image
+                src={`/images/avatar/default.jpg`}
+                alt={name}
+                width={120}
+                height={168}
+                className="object-cover rounded-md"
+              />
             )}
 					</div>
 

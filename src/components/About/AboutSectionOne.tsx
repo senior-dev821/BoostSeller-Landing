@@ -86,8 +86,11 @@ const AboutSectionOne: React.FC = () => {
             </div>
 
             <div className="w-full px-4 lg:w-1/2">
-              <PhoneCarousel />
-            </div>
+							<div className="max-w-[580px] mx-auto">
+								<PhoneCarousel />
+							</div>
+						</div>
+
           </div>
         </div>
       </div>
